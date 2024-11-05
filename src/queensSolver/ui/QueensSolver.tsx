@@ -1,11 +1,11 @@
 import React, { createRef, useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { selectImage } from "@/queensSolver/functions/selectImage";
 import { getCropData } from "@/queensSolver/functions/getCropData";
 import { hexToRGB } from "@/queensSolver/functions/hexToRGB";
 import { drawClearField } from "@/queensSolver/functions/drawClearField";
 import { findQueens } from "@/queensSolver/functions/findQueens";
+import DragImgForm from "@/dragImgForm/ui/DragImgForm";
 
 export interface CellColor {
   x: number;
@@ -24,7 +24,7 @@ const QueensSolver = () => {
   // TODO change CSS
   // TODO do not show an empty canvas
   // TODO remove a crop preview ???
-  // TODO implement Dnd and Ctrl+C - Ctrl+V for images
+  // TODO implement Ctrl+C - Ctrl+V for images
 
   async function solve(fieldSize: string) {
     try {
@@ -129,11 +129,10 @@ const QueensSolver = () => {
 
   return (
     <div>
-      <input
-        id={"avatar-upload-input"}
-        type="file"
-        accept="image/*"
-        onChange={(e) => selectImage(e, setImage, image)}
+      <DragImgForm
+        callback={(img) => {
+          setImage(img);
+        }}
       />
       {image && (
         <>
