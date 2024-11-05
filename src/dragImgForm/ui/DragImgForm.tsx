@@ -13,6 +13,7 @@ const DragImgForm = ({ callback }: IDragImg) => {
     const dropAreaElem = dropArea.current as HTMLDivElement;
     const dragEventsIn = ["dragenter", "dragover"];
     const dragEventsOut = ["dragleave", "drop"];
+
     dragEventsIn.concat(dragEventsOut).forEach((eventName) => {
       dropAreaElem.addEventListener(eventName, preventDefault, false);
     });
@@ -23,6 +24,8 @@ const DragImgForm = ({ callback }: IDragImg) => {
       dropAreaElem.addEventListener(eventName, unhighlight, false);
     });
     dropAreaElem.addEventListener("drop", handleDrop, false);
+    window.addEventListener("paste", handlePaste);
+
     return () => {
       dragEventsIn.concat(dragEventsOut).forEach((eventName) => {
         dropAreaElem.removeEventListener(eventName, preventDefault, false);
@@ -34,6 +37,7 @@ const DragImgForm = ({ callback }: IDragImg) => {
         dropAreaElem.removeEventListener(eventName, unhighlight, false);
       });
       dropAreaElem.removeEventListener("drop", handleDrop, false);
+      window.removeEventListener("paste", handlePaste);
     };
   }, []);
 
@@ -59,6 +63,18 @@ const DragImgForm = ({ callback }: IDragImg) => {
     handleFiles(files);
   }
 
+  function handlePaste(e: ClipboardEvent) {
+    try {
+      e.preventDefault();
+      const files = e.clipboardData?.files;
+      if (files && files.length > 0) {
+        handleFiles(files);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   function handleFiles(files: FileList) {
     // get only first file
     const file = [...files][0];
@@ -75,8 +91,8 @@ const DragImgForm = ({ callback }: IDragImg) => {
     <div ref={dropArea} id="drop-area">
       <form className="my-form">
         <p>
-          Upload multiple files with the file dialog or by dragging and dropping
-          images onto the dashed region
+          {"Upload multiple files with the file dialog or by dragging and dropping\n" +
+            "          images onto the dashed region or by 'Ctrl+V'"}
         </p>
         <input
           type="file"
