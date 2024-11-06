@@ -91,8 +91,8 @@ const DragImgForm = ({ callback }: IDragImg) => {
     <div ref={dropArea} id="drop-area">
       <form className="my-form">
         <p>
-          {"Upload multiple files with the file dialog or by dragging and dropping\n" +
-            "          images onto the dashed region or by 'Ctrl+V'"}
+          {"Upload file with the file dialog or by dragging and dropping\n" +
+            "          image onto the dashed region or by 'Ctrl+V'"}
         </p>
         <input
           type="file"
@@ -103,7 +103,7 @@ const DragImgForm = ({ callback }: IDragImg) => {
           }}
         />
         <label className="button" htmlFor="fileElem">
-          Select some files
+          Select file
         </label>
       </form>
     </div>
