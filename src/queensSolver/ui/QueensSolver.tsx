@@ -22,10 +22,13 @@ const QueensSolver = () => {
   const [lastClickSolveBtn, setLastClickSolveBtn] = useState(new Date());
   const [solutionVisibility, setSolutionVisibility] = useState(false);
 
-  // TODO Erase a previous canvas with change of image
   // TODO add an error message display
   // TODO insert an image of queen
   // TODO change CSS for mobile devices
+
+  useEffect(() => {
+    setSolutionVisibility(false);
+  }, [image]);
 
   useEffect(() => {
     if (!solutionVisibility) return;
