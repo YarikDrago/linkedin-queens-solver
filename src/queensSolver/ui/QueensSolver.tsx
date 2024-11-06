@@ -21,12 +21,14 @@ const QueensSolver = () => {
   const [gridSize, setGridSize] = useState("1");
   const [lastClickSolveBtn, setLastClickSolveBtn] = useState(new Date());
   const [solutionVisibility, setSolutionVisibility] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  // TODO add an error message display
   // TODO insert an image of queen
   // TODO change CSS for mobile devices
+  // TODO add the auto-determination of the grid size
 
   useEffect(() => {
+    setErrorMsg("");
     setSolutionVisibility(false);
   }, [image]);
 
@@ -41,8 +43,9 @@ const QueensSolver = () => {
 
   async function solve(fieldSize: string) {
     try {
+      setErrorMsg("");
       if (isNaN(+fieldSize)) {
-        throw new Error("Grid size not a number!");
+        throw new Error("Error: Grid size not a number!");
       }
       // analyze
       const cropImg = getCropData(cropperRef);
@@ -54,6 +57,8 @@ const QueensSolver = () => {
       // TODO
       setSolutionVisibility(false);
       console.log(e);
+      // throw new Error((e as Error).message)
+      setErrorMsg((e as Error).message);
     }
   }
 
@@ -65,7 +70,7 @@ const QueensSolver = () => {
       const canvas = canvasRef.current;
       const context = canvas?.getContext("2d");
       if (!canvas || !context) {
-        reject(new Error("Cannot create cells data"));
+        reject(new Error("Error: Cannot create cells data"));
         return;
       }
 
@@ -98,7 +103,7 @@ const QueensSolver = () => {
       };
 
       imageCanvas.onerror = () => {
-        reject(new Error("Failed to load image"));
+        reject(new Error("Error: Failed to load image"));
       };
     });
   }
@@ -110,7 +115,7 @@ const QueensSolver = () => {
       colors.add(cell.color);
     });
     if (colors.size === gridSize) return cellsData;
-    console.log("incorrect colors amount", colors.size, gridSize);
+    console.log("Incorrect number of colors.", colors.size, gridSize);
     const newCellsData = [...cellsData];
     const filteredColors: string[] = [];
 
@@ -136,7 +141,7 @@ const QueensSolver = () => {
 
     // check again the colors amount
     if (filteredColors.length !== gridSize) {
-      throw new Error("incorrect colors amount (2nd check)");
+      throw new Error("Error: incorrect number of colors.");
     }
     return newCellsData;
   }
@@ -155,6 +160,7 @@ const QueensSolver = () => {
             <input
               value={gridSize}
               onChange={(e) => {
+                setErrorMsg("");
                 setGridSize(e.target.value);
               }}
             />
@@ -169,6 +175,7 @@ const QueensSolver = () => {
           >
             Solve
           </button>
+          {errorMsg !== "" && <p className={"error-msg"}>{errorMsg}</p>}
           <Cropper
             ref={cropperRef}
             style={{ height: 400, width: 400, backgroundColor: "gray" }}

@@ -23,6 +23,13 @@
     }
   }
 
+  .error-msg {
+    font-size: 30px;
+    font-weight: 900;
+    color: darkred;
+    margin-bottom: 20px;
+  }
+
   .solve-btn {
     background-color: #71a687;
     height: 50px;
@@ -34,7 +41,6 @@
     color: antiquewhite;
     border-radius: 10px;
     transition: background-color .3s linear;
-
   }
 
   .solve-btn:hover {
