@@ -1,4 +1,4 @@
-import React, { createRef, useRef, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { getCropData } from "@/queensSolver/functions/getCropData";
@@ -6,6 +6,7 @@ import { hexToRGB } from "@/queensSolver/functions/hexToRGB";
 import { drawClearField } from "@/queensSolver/functions/drawClearField";
 import { findQueens } from "@/queensSolver/functions/findQueens";
 import DragImgForm from "@/dragImgForm/ui/DragImgForm";
+import "./QueensSolver.styles.scss";
 
 export interface CellColor {
   x: number;
@@ -18,13 +19,22 @@ const QueensSolver = () => {
   const cropperRef = createRef<ReactCropperElement>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gridSize, setGridSize] = useState("1");
+  const [lastClickSolveBtn, setLastClickSolveBtn] = useState(new Date());
+  const [solutionVisibility, setSolutionVisibility] = useState(false);
 
   // TODO Erase a previous canvas with change of image
   // TODO add an error message display
-  // TODO change CSS
-  // TODO do not show an empty canvas
-  // TODO remove a crop preview ???
-  // TODO implement Ctrl+C - Ctrl+V for images
+  // TODO insert an image of queen
+  // TODO change CSS for mobile devices
+
+  useEffect(() => {
+    if (!solutionVisibility) return;
+    solve(gridSize);
+    document.getElementById("queens-solution-end")!.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  }, [lastClickSolveBtn]);
 
   async function solve(fieldSize: string) {
     try {
@@ -39,6 +49,7 @@ const QueensSolver = () => {
       findQueens(canvasRef, +gridSize, cellsData);
     } catch (e) {
       // TODO
+      setSolutionVisibility(false);
       console.log(e);
     }
   }
@@ -128,7 +139,7 @@ const QueensSolver = () => {
   }
 
   return (
-    <div>
+    <div className={"queens-solver"}>
       <DragImgForm
         callback={(img) => {
           setImage(img);
@@ -136,6 +147,25 @@ const QueensSolver = () => {
       />
       {image && (
         <>
+          <div className={"grid-size-block"}>
+            <p>Grid size:</p>
+            <input
+              value={gridSize}
+              onChange={(e) => {
+                setGridSize(e.target.value);
+              }}
+            />
+          </div>
+          <button
+            className={"solve-btn"}
+            onClick={() => {
+              // solve(gridSize);
+              setSolutionVisibility(true);
+              setLastClickSolveBtn(new Date());
+            }}
+          >
+            Solve
+          </button>
           <Cropper
             ref={cropperRef}
             style={{ height: 400, width: 400, backgroundColor: "gray" }}
@@ -153,6 +183,7 @@ const QueensSolver = () => {
             guides={true}
             zoomable={false}
           />
+          <p>Preview</p>
           <div
             className="img-preview"
             style={{
@@ -163,30 +194,23 @@ const QueensSolver = () => {
               backgroundColor: "green",
             }}
           />
-          <p>Grid size</p>
-          <input
-            value={gridSize}
-            onChange={(e) => {
-              setGridSize(e.target.value);
-            }}
-          />
-          <button
-            onClick={() => {
-              solve(gridSize);
-            }}
-          >
-            Solve
-          </button>
-          <canvas
-            ref={canvasRef}
-            style={{
-              width: 400,
-              height: 400,
-              backgroundColor: "darkred",
-            }}
-          />
+          {solutionVisibility && (
+            <>
+              <h2>Solution</h2>
+              <canvas
+                id={"queens-solution-canvas"}
+                ref={canvasRef}
+                style={{
+                  height: 400,
+                  width: 400,
+                  backgroundColor: "green",
+                }}
+              />
+            </>
+          )}
         </>
       )}
+      <p id={"queens-solution-end"} />
     </div>
   );
 };
