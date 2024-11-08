@@ -1,5 +1,6 @@
 import React from "react";
 import { CellColor } from "@/queensSolver/ui/QueensSolver";
+import queenIcon from "@/../public/img/queen-icon.svg";
 
 export function findQueens(
   canvasRef: React.RefObject<HTMLCanvasElement>,
@@ -20,19 +21,24 @@ export function findQueens(
     const context = canvas.getContext("2d");
     const cellSide = 400 / gridSize;
     if (!context) return;
-    context.fillStyle = "black";
+    const queenImg = new Image();
+    queenImg.src = queenIcon;
     const padding = 0.25; // in percents
-    for (const queen of queens) {
-      context.fillRect(
-        queen.x * cellSide + cellSide * padding,
-        queen.y * cellSide + cellSide * padding,
-        cellSide - 2 * cellSide * padding,
-        cellSide - 2 * cellSide * padding,
-      );
-    }
+    const imgDisplaySize = cellSide - 2 * cellSide * padding;
+    queenImg.onload = () => {
+      for (const queen of queens) {
+        context.drawImage(
+          queenImg,
+          cellSide * (queen.x + padding),
+          cellSide * (queen.y + padding),
+          imgDisplaySize,
+          imgDisplaySize,
+        );
+      }
+    };
     return;
   }
-  throw new Error("can not find queens")
+  throw new Error("can not find queens");
 
   function iter(
     row: number,

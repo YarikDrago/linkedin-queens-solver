@@ -23,7 +23,6 @@ const QueensSolver = () => {
   const [solutionVisibility, setSolutionVisibility] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // TODO insert an image of queen
   // TODO change CSS for mobile devices
   // TODO add the auto-determination of the grid size
 
