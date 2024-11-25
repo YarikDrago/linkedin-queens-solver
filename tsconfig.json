@@ -1,36 +1,15 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": [
-        "*"
-      ]
-    },
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
+    "target": "ES6",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "strictPropertyInitialization": false
+    "jsx": "react",
+    "strict": true,
+    "esModuleInterop": true,
+    "lib": ["es2015", "dom"],
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "declaration": true
   },
-  "include": [
-    "config/**/*.ts",
-    "src",
-    "src/components",
-    "./*.ts"
-  ]
+  "include": ["config/**/*.ts", "src", "custom.d.ts"],
+  "exclude": ["node_modules", "dist", "./src/stories"]
 }
