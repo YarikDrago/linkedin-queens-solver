@@ -1,6 +1,6 @@
 import React from "react";
-import { CellColor } from "@/queensSolver/ui/QueensSolver";
-import queenIcon from "@/../public/img/queen-icon.svg";
+import queenIcon from "../../assets/img/queen-icon.svg"
+import {CellColor} from "../ui/QueensSolver";
 
 export function findQueens(
   canvasRef: React.RefObject<HTMLCanvasElement>,

@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "webpack": "webpack",
-    "publish": "webpack && npm version patch && npm publish"
+    "pub": "webpack && npm version patch && npm publish"
   },
   "keywords": [],
   "author": "",

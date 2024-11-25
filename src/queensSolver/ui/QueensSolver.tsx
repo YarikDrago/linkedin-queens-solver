@@ -1,12 +1,12 @@
 import React, { createRef, useEffect, useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { getCropData } from "@/queensSolver/functions/getCropData";
-import { hexToRGB } from "@/queensSolver/functions/hexToRGB";
-import { drawClearField } from "@/queensSolver/functions/drawClearField";
-import { findQueens } from "@/queensSolver/functions/findQueens";
-import DragImgForm from "@/dragImgForm/ui/DragImgForm";
-import "./QueensSolver.styles.scss";
+import "./QueensSolver.styles.css";
+import {getCropData} from "../functions/getCropData";
+import {drawClearField} from "../functions/drawClearField";
+import {findQueens} from "../functions/findQueens";
+import {hexToRGB} from "../functions/hexToRGB";
+import DragImgForm from "../../dragImgForm/ui/DragImgForm";
 
 export interface CellColor {
   x: number;

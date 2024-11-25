@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import "./dragImgFrom.styles.scss";
+import "./dragImgFrom.styles.css";
 
 interface IDragImg {
   callback: (fileString: string) => void;
@@ -76,14 +76,27 @@ const DragImgForm = ({ callback }: IDragImg) => {
   }
 
   function handleFiles(files: FileList) {
-    // get only first file
-    const file = [...files][0];
+    if (!files || files.length === 0) {
+      console.error("No files provided.");
+      return;
+    }
+    // Get only first file
+    const file = files[0];
     const reader = new FileReader();
+
     reader.onload = () => {
-      if (typeof reader.result === "string") {
-        callback(reader.result);
+      const result = reader.result;
+      if (typeof result === "string") {
+        callback(result);
+      } else {
+        console.error("FileReader result is not a string.");
       }
     };
+
+    reader.onerror = () => {
+      console.error("Error reading the file:", reader.error);
+    };
+
     reader.readAsDataURL(file);
   }
 

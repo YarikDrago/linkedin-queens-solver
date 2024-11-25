@@ -1,4 +1,4 @@
-import { CellColor } from "@/queensSolver/ui/QueensSolver";
+import {CellColor} from "../ui/QueensSolver";
 
 export function drawClearField(
   canvasRef: React.RefObject<HTMLCanvasElement>,

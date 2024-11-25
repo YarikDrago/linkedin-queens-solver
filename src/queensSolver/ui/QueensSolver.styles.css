@@ -1,0 +1,67 @@
+.queens-solver {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.queens-solver .grid-size-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.queens-solver .grid-size-block p {
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.queens-solver .grid-size-block input {
+  height: 25px;
+  width: 50px;
+  border-radius: 5px;
+}
+
+.queens-solver .error-msg {
+  font-size: 30px;
+  font-weight: 900;
+  color: darkred;
+  margin-bottom: 20px;
+}
+
+.queens-solver .solve-btn {
+  background-color: #71a687;
+  height: 50px;
+  width: 150px;
+  margin: 30px 0;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 900;
+  color: antiquewhite;
+  border-radius: 10px;
+  transition: background-color 0.3s linear;
+}
+
+.queens-solver .solve-btn:hover {
+  background-color: #209b59;
+}
+
+.queens-solver p {
+  margin: 0;
+}
+
+.queens-solver h2 {
+  margin-top: 50px;
+  text-decoration: underline;
+}
+
+#queens-solution-canvas {
+  margin-bottom: 100px;
+}
+
+#queens-solution-end {
+  height: 0;
+  width: 0;
+}
